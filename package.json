@@ -1,0 +1,16 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "npx parcel public/index.html"
+  },
+  "author": "Kiril Reznik",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {}
+}

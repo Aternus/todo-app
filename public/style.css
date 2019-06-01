@@ -1,0 +1,3 @@
+.todoItem.complete .taskName {
+  text-decoration: line-through;
+}
