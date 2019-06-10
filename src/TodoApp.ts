@@ -12,6 +12,8 @@ class TodoApp {
   private readonly listElm: HTMLElement;
   private readonly itemTpl: HTMLTemplateElement;
 
+  private noItemsElm: HTMLElement | null = null;
+
   /**
    * Constructor
    *
@@ -136,6 +138,52 @@ class TodoApp {
   }
 
   /**
+   * Create Item Fragment
+   *
+   * @param {TodoItem} todo
+   *
+   * @return {DocumentFragment}
+   */
+  private createItemFragment(todo: TodoItem): DocumentFragment {
+    // create a todo item using the template
+    const itemElm = document.importNode(this.itemTpl.content, true);
+
+    // get elements
+    const containerElm = itemElm.firstElementChild as HTMLElement;
+    const inputElm = itemElm.querySelector('.taskName') as HTMLInputElement;
+    const completeElm = itemElm.querySelector('.taskComplete') as HTMLInputElement;
+    const completeLabelElm = itemElm.querySelector('.taskCompleteLabel') as HTMLLabelElement;
+
+    // set todo item attributes
+    containerElm.dataset.todoId = String(todo.id);
+    inputElm.innerText = todo.task;
+    completeElm.id = `todoItem-${todo.id}`;
+    completeLabelElm.htmlFor = `todoItem-${todo.id}`;
+
+    // complete state
+    if (todo.state === TodoItemState.Completed) {
+      containerElm.classList.add('complete');
+      completeElm.checked = true;
+    }
+
+    return itemElm;
+  }
+
+  /**
+   * Get No Items Element
+   *
+   * @return {HTMLElement}
+   */
+  private getNoItemsElement(): HTMLElement {
+    if (!this.noItemsElm) {
+      this.noItemsElm = document.createElement('p');
+      this.noItemsElm.textContent = `Great! You're all done. Ready for some more?`;
+    }
+
+    return this.noItemsElm;
+  }
+
+  /**
    * Render
    */
   private render() {
@@ -145,45 +193,25 @@ class TodoApp {
     // get all todos
     const todos = this.todoService.getAll();
 
-    // create a fragment
-    const fragment = document.createDocumentFragment();
+    // create a container fragment
+    const containerFragment = document.createDocumentFragment();
 
     // for each todo in the todos array
     todos.forEach((todo: TodoItem) => {
-      // create a todo item using the template
-      const itemElm = document.importNode(this.itemTpl.content, true);
+      // create item
+      const itemFragment = this.createItemFragment(todo);
 
-      // get elements
-      const containerElm = itemElm.firstElementChild as HTMLElement;
-      const inputElm = itemElm.querySelector('.taskName') as HTMLInputElement;
-      const completeElm = itemElm.querySelector('.taskComplete') as HTMLInputElement;
-      const completeLabelElm = itemElm.querySelector('.taskCompleteLabel') as HTMLLabelElement;
-
-      // set todo item attributes
-      containerElm.dataset.todoId = String(todo.id);
-      inputElm.innerText = todo.task;
-      completeElm.id = `todoItem-${todo.id}`;
-      completeLabelElm.htmlFor = `todoItem-${todo.id}`;
-
-      // complete state
-      if (todo.state === TodoItemState.Completed) {
-        containerElm.classList.add('complete');
-        completeElm.checked = true;
-      }
-
-      // attach the todo item to the fragment
-      fragment.appendChild(itemElm);
+      // attach the item to the container
+      containerFragment.appendChild(itemFragment);
     });
 
     // no todos
-    if (!fragment.children.length) {
-      const noItemsElm = document.createElement('p');
-      noItemsElm.textContent = `Great! You're all done. Ready for some more?`;
-      fragment.appendChild(noItemsElm);
+    if (!containerFragment.children.length) {
+      containerFragment.appendChild(this.getNoItemsElement());
     }
 
     // change DOM
-    this.listElm.appendChild(fragment);
+    this.listElm.appendChild(containerFragment);
   }
 }
 
