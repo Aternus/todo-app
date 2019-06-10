@@ -1,4 +1,4 @@
-import {TodoItem, TodoItemState} from './interfaces';
+import { TodoItem, TodoItemState } from './interfaces';
 
 import TodoService from './TodoService';
 
@@ -18,31 +18,21 @@ class TodoApp {
    * @param {HTMLElement} appElm
    * @param {string[]} todos
    */
-  constructor(
-      private readonly appElm: HTMLElement,
-      todos: string[] = [],
-  ) {
+  constructor(private readonly appElm: HTMLElement, todos: string[] = []) {
     // create the todo service
     this.todoService = new TodoService(todos);
 
     // form elm
-    this.formElm = this.appElm.querySelector(
-        '#addTodoForm') as HTMLFormElement;
+    this.formElm = this.appElm.querySelector('#addTodoForm') as HTMLFormElement;
 
     // list elm
-    this.listElm = this.appElm.querySelector(
-        '#todoList') as HTMLElement;
+    this.listElm = this.appElm.querySelector('#todoList') as HTMLElement;
 
     // item template
-    this.itemTpl = this.appElm.querySelector(
-        '#todoItemTpl') as HTMLTemplateElement;
+    this.itemTpl = this.appElm.querySelector('#todoItemTpl') as HTMLTemplateElement;
 
     // sanity check
-    if (
-        !this.formElm ||
-        !this.listElm ||
-        !this.itemTpl
-    ) {
+    if (!this.formElm || !this.listElm || !this.itemTpl) {
       throw new Error(`You're doing it wrong.`);
     }
 
@@ -61,10 +51,8 @@ class TodoApp {
     this.formElm.addEventListener('submit', this.onClickAddItem.bind(this));
 
     // clear completed
-    const clearElm = this.appElm.querySelector(
-        '#clearCompletedTodos') as HTMLButtonElement;
-    clearElm.addEventListener('click',
-        this.onClickClearCompletedItems.bind(this));
+    const clearElm = this.appElm.querySelector('#clearCompletedTodos') as HTMLButtonElement;
+    clearElm.addEventListener('click', this.onClickClearCompletedItems.bind(this));
 
     // complete, delete
     this.listElm.addEventListener('click', this.onClickItem.bind(this));
@@ -87,14 +75,14 @@ class TodoApp {
       const id = Number(itemElm.dataset.todoId);
 
       switch (true) {
-          // handle complete
+        // handle complete
         case targetElm.classList.contains('taskComplete'):
           // toggle
           this.todoService.toggle(id);
           this.render();
           break;
 
-          // handle delete
+        // handle delete
         case targetElm.classList.contains('taskDelete'):
           // delete
           this.todoService.delete(id);
@@ -113,12 +101,10 @@ class TodoApp {
     ev.preventDefault();
 
     // get the input value
-    const taskElm = this.formElm.querySelector(
-        '#addTodoTask') as HTMLInputElement;
+    const taskElm = this.formElm.querySelector('#addTodoTask') as HTMLInputElement;
 
     // get the complete value
-    const completeElm = this.formElm.querySelector(
-        '#addTodoComplete') as HTMLInputElement;
+    const completeElm = this.formElm.querySelector('#addTodoComplete') as HTMLInputElement;
 
     // validate
     if (taskElm.value.length < 3) {
@@ -169,12 +155,9 @@ class TodoApp {
 
       // get elements
       const containerElm = itemElm.firstElementChild as HTMLElement;
-      const inputElm = itemElm.querySelector(
-          '.taskName') as HTMLInputElement;
-      const completeElm = itemElm.querySelector(
-          '.taskComplete') as HTMLInputElement;
-      const completeLabelElm = itemElm.querySelector(
-          '.taskCompleteLabel') as HTMLLabelElement;
+      const inputElm = itemElm.querySelector('.taskName') as HTMLInputElement;
+      const completeElm = itemElm.querySelector('.taskComplete') as HTMLInputElement;
+      const completeLabelElm = itemElm.querySelector('.taskCompleteLabel') as HTMLLabelElement;
 
       // set todo item attributes
       containerElm.dataset.todoId = String(todo.id);

@@ -1,4 +1,4 @@
-import {ITodoService, TodoItem, TodoItemState} from './interfaces';
+import { ITodoService, TodoItem, TodoItemState } from './interfaces';
 
 /**
  * Todo Service
@@ -18,12 +18,12 @@ class TodoService implements ITodoService {
 
   constructor(todos: string[]) {
     if (todos) {
-      todos.forEach(todo => this.add(todo));
+      todos.forEach((todo) => this.add(todo));
     }
   }
 
-  add(input: string): TodoItem
-  add(input: TodoItem): TodoItem
+  add(input: string): TodoItem;
+  add(input: TodoItem): TodoItem;
   add(input: string | TodoItem): TodoItem {
     const todo: TodoItem = {
       id: TodoService.generateNextId(),
@@ -79,9 +79,7 @@ class TodoService implements ITodoService {
   }
 
   clearCompleted(): void {
-    this.todos = this.todos.filter(
-        (todo: TodoItem) => todo.state !== TodoItemState.Completed,
-    );
+    this.todos = this.todos.filter((todo: TodoItem) => todo.state !== TodoItemState.Completed);
   }
 
   private findById(id: number): TodoItem | null {

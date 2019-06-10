@@ -6,7 +6,7 @@ export enum TodoItemState {
 export interface TodoItem {
   id: number;
   task: string;
-  state: TodoItemState
+  state: TodoItemState;
 }
 
 export interface ITodoService {
