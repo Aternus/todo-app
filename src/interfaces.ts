@@ -1,13 +1,4 @@
-export enum TodoItemState {
-  Active = 1,
-  Completed,
-}
-
-export interface TodoItem {
-  id: number;
-  task: string;
-  state: TodoItemState;
-}
+import { TodoItem } from './models';
 
 export interface ITodoService {
   add(todo: string): TodoItem;

@@ -1,4 +1,5 @@
-import { ITodoService, TodoItem, TodoItemState } from './interfaces';
+import { TodoItem, TodoItemState } from './models';
+import { ITodoService } from './interfaces';
 
 /**
  * Todo Service

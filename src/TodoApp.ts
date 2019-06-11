@@ -1,5 +1,4 @@
-import { TodoItem, TodoItemState } from './interfaces';
-
+import { TodoItem, TodoItemState } from './models';
 import TodoService from './TodoService';
 
 /**
