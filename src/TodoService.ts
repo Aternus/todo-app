@@ -43,7 +43,7 @@ class TodoService implements ITodoService {
       throw 'Invalid Todo Task';
     }
 
-    console.log(this.validate());
+    // console.log(this.validate());
 
     // validate
     // const errors = todo.validate();
