@@ -3,6 +3,7 @@
     "target": "es5",
     "strict": true,
     "noEmit": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "experimentalDecorators": true
   }
 }

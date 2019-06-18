@@ -1,9 +1,12 @@
 import { TodoItem, TodoItemState } from './models';
 import { ITodoService } from './interfaces';
+import { log } from './decorators';
+import { IValidationResult, validatable, ValidatableTodo } from './validators';
 
 /**
  * Todo Service
  */
+@validatable
 class TodoService implements ITodoService {
   private todos: TodoItem[] = [];
 
@@ -25,12 +28,12 @@ class TodoService implements ITodoService {
 
   add(input: string): TodoItem;
   add(input: TodoItem): TodoItem;
+  @log
   add(input: string | TodoItem): TodoItem {
-    const todo: TodoItem = {
-      id: TodoService.generateNextId(),
-      task: '',
-      state: TodoItemState.Active,
-    };
+    const todo: ValidatableTodo = new ValidatableTodo();
+    todo.id = TodoService.generateNextId();
+    todo.task = '';
+    todo.state = TodoItemState.Active;
 
     if (typeof input === 'string') {
       todo.task = input;
@@ -38,6 +41,17 @@ class TodoService implements ITodoService {
       todo.task = input.task;
     } else {
       throw 'Invalid Todo Task';
+    }
+
+    console.log(this.validate());
+
+    // validate
+    // const errors = todo.validate();
+    const errors: IValidationResult[] = [];
+
+    if (errors.length) {
+      const combinedErrors = errors.map((x) => `${x.property}: ${x.message}`);
+      throw new Error(`Invalid Todo: ${combinedErrors}`);
     }
 
     this.todos.push(todo);
