@@ -1,23 +1,20 @@
 /**
- * Method Decorator: Log
- *
- * @param {Object} target - The object that the member lives on (instance).
- * @param {string} methodName - The name of the method to be decorated.
- * @param {PropertyDescriptor} descriptor - An object that contains all the metadata
- *                                          for the method you're looking to modify.
+ * Method Decorator: Logged Method
  */
-function log(target: Object, methodName: string, descriptor: PropertyDescriptor) {
-  // console.log(target);
-  // console.log(methodName);
-  // console.log(descriptor);
+function loggedMethod(originalMethod: any, context: ClassMethodDecoratorContext) {
+  const methodName = String(context.name);
 
-  const fn = descriptor.value;
+  return function log(this: any, ...args: any[]) {
+    console.log({
+      methodName,
+      this: this,
+      args: args,
+    });
 
-  descriptor.value = function(...args: any[]) {
-    const result = fn.apply(this, args);
+    const result = originalMethod.apply(this, args);
     console.log(`${methodName}(${JSON.stringify(args)}) => ${JSON.stringify(result)}`);
     return result;
   };
 }
 
-export { log };
+export { loggedMethod };

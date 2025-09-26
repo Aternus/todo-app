@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2024",
     "strict": true,
     "noEmit": true,
     "sourceMap": true,
-    "experimentalDecorators": true
+
+    // vite
+    "isolatedModules": true,
+    "useDefineForClassFields": true
   }
 }

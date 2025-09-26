@@ -19,7 +19,10 @@ class TodoApp {
    * @param {HTMLElement} appElm
    * @param {string[]} todos
    */
-  constructor(private readonly appElm: HTMLElement, todos: string[] = []) {
+  constructor(
+    private readonly appElm: HTMLElement,
+    todos: string[] = [],
+  ) {
     // create the todo service
     this.todoService = new TodoService(todos);
 
@@ -106,11 +109,6 @@ class TodoApp {
 
     // get the complete value
     const completeElm = this.formElm.querySelector('#addTodoComplete') as HTMLInputElement;
-
-    // validate
-    if (taskElm.value.length < 3) {
-      throw new Error(`Todo must include a task with a min-length of 3.`);
-    }
 
     // add a new item
     const newItem = this.todoService.add(taskElm.value);

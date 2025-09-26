@@ -1,4 +1,8 @@
-module.exports = {
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
+const config = {
   semi: true,
   singleQuote: true,
   quoteProps: 'consistent',
@@ -9,3 +13,5 @@ module.exports = {
   endOfLine: 'lf',
   printWidth: 100,
 };
+
+export default config;

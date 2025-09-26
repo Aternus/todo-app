@@ -1,12 +1,10 @@
-import { TodoItem, TodoItemState } from './models';
+import { TodoItem, TodoItemState, ValidatableTodo } from './models';
 import { ITodoService } from './interfaces';
-import { log } from './decorators';
-import { IValidationResult, validatable, ValidatableTodo } from './validators';
+import { loggedMethod } from './decorators';
 
 /**
  * Todo Service
  */
-@validatable
 class TodoService implements ITodoService {
   private todos: TodoItem[] = [];
 
@@ -28,7 +26,7 @@ class TodoService implements ITodoService {
 
   add(input: string): TodoItem;
   add(input: TodoItem): TodoItem;
-  @log
+  @loggedMethod
   add(input: string | TodoItem): TodoItem {
     const todo: ValidatableTodo = new ValidatableTodo();
     todo.id = TodoService.generateNextId();
@@ -43,11 +41,8 @@ class TodoService implements ITodoService {
       throw 'Invalid Todo Task';
     }
 
-    // console.log(this.validate());
-
     // validate
-    // const errors = todo.validate();
-    const errors: IValidationResult[] = [];
+    const errors = todo.validate();
 
     if (errors.length) {
       const combinedErrors = errors.map((x) => `${x.property}: ${x.message}`);

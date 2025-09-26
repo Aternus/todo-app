@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,20 +10,16 @@
 
     <title>TypeScript Todo App</title>
 
-    <link
-      rel="stylesheet"
-      href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="src/assets/style.scss" />
   </head>
   <body>
     <div id="todoApp" class="container">
       <h1 class="text-center my-4">Todo App</h1>
 
       <form id="addTodoForm" class="my-4">
-        <div class="form-row align-items-center">
+        <div class="row align-items-center">
           <div class="col">
-            <label for="addTodoTask" class="sr-only">What would you like to do?</label>
+            <label for="addTodoTask" class="visually-hidden">What would you like to do?</label>
             <input
               id="addTodoTask"
               type="text"
@@ -34,9 +30,9 @@
             />
           </div>
           <div class="col-auto px-2">
-            <div class="custom-control custom-checkbox">
-              <input id="addTodoComplete" type="checkbox" class="custom-control-input" />
-              <label class="custom-control-label" for="addTodoComplete">Complete</label>
+            <div class="form-check">
+              <input id="addTodoComplete" class="form-check-input" type="checkbox" />
+              <label for="addTodoComplete" class="form-check-label">Complete</label>
             </div>
           </div>
           <div class="col-auto">
@@ -58,15 +54,13 @@
       <!-- #todoList -->
 
       <template id="todoItemTpl">
-        <div class="todoItem bg-light border rounded-sm p-2 mb-2">
-          <div class="row no-gutters align-items-center justify-content-between">
-            <div class="col px-2 taskName">
-              Task Name
-            </div>
+        <div class="todoItem bg-light border rounded p-2 mb-2">
+          <div class="row g-0 align-items-center justify-content-between">
+            <div class="col px-2 taskName">Task Name</div>
             <div class="col-auto px-2">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="taskComplete custom-control-input" />
-                <label class="taskCompleteLabel custom-control-label">Complete</label>
+              <div class="form-check">
+                <input class="taskComplete form-check-input" type="checkbox" />
+                <label class="taskCompleteLabel form-check-label">Complete</label>
               </div>
             </div>
             <div class="col-auto">
@@ -79,10 +73,6 @@
     </div>
     <!-- #todoApp -->
 
-    <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <script src="../src/app.ts"></script>
+    <script type="module" src="src/app.ts"></script>
   </body>
 </html>
